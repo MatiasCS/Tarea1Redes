@@ -139,7 +139,7 @@ public class ServidorHttp implements Runnable{
                     BufferedWriter buffescritor=new BufferedWriter(escritor);
                     PrintWriter escritor_final= new PrintWriter(buffescritor);
                     
-                    escritor_final.write(datos2[1]+" "+datos2[3]+" "+datos2[5]+"\r\n");
+                    escritor_final.append(datos2[1]+" "+datos2[3]+" "+datos2[5]+"\r\n");
                     escritor_final.close();
                     buffescritor.close();
                 }
