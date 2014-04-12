@@ -131,6 +131,22 @@ public class ServidorHttp implements Runnable{
                 //-----------------------------------------
                 //Parte de ingresar los datos a un archivo.txt
                 //-----------------------------------------
+                File fichero;
+                fichero = new File("Contactos.txt");
+                
+                try{
+                    FileWriter escritor=new FileWriter(fichero,true);
+                    BufferedWriter buffescritor=new BufferedWriter(escritor);
+                    PrintWriter escritor_final= new PrintWriter(buffescritor);
+                    
+                    escritor_final.write(datos2[1]+" "+datos2[3]+" "+datos2[5]+"\r\n");
+                    escritor_final.close();
+                    buffescritor.close();
+                }
+                catch(IOException e){}
+                //-----------------------------------------
+                //FIN ESCRIBIR FICHERO
+                //-----------------------------------------
                                 
             }
             //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
