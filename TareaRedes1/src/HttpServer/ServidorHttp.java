@@ -6,10 +6,13 @@ package HttpServer;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.StringTokenizer;
@@ -135,8 +138,22 @@ public class ServidorHttp implements Runnable{
                 //-----------------------------------------
                 //Parte de ingresar los datos a un archivo.txt
                 //-----------------------------------------
+                File fichero;
+                fichero = new File("Contactos.txt");
                 
-                
+                try{
+                    FileWriter escritor=new FileWriter(fichero,true);
+                    BufferedWriter buffescritor=new BufferedWriter(escritor);
+                    PrintWriter escritor_final= new PrintWriter(buffescritor);
+                    
+                    escritor_final.write(datos2[1]+" "+datos2[3]+" "+datos2[5]+"\r\n");
+                    escritor_final.close();
+                    buffescritor.close();
+                }
+                catch(IOException e){}
+                //-----------------------------------------
+                //FIN LEER FICHERO
+                //-----------------------------------------
                
                 
             }
