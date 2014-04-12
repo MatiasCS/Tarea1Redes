@@ -8,10 +8,14 @@ package HttpServer;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.StringTokenizer;
@@ -59,11 +63,12 @@ public class ServidorHttp implements Runnable{
         BufferedReader entradacliente;
         String archivoPedido;
         String metodo;
-        BufferedOutputStream salidaArchivo = null;
+        BufferedOutputStream salidaArchivo;
         try {
+            crearHtml();
             //Lectura mensaje enviado por el cliente
             entradacliente = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
-            String entrada = entradacliente.readLine();
+            String entrada = entradacliente.readLine();            
             StringTokenizer token = new StringTokenizer(entrada);
             metodo = token.nextToken();
             archivoPedido = token.nextToken();
@@ -85,11 +90,40 @@ public class ServidorHttp implements Runnable{
                 
                 salidaArchivo.write(buffer,0,pesoArchivo);
                 salidaArchivo.flush();
+                
+                entradacliente.close();
+                salidaArchivo.close();
+                conexion.close();
             }
           
             //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         } catch (IOException ex) {
             Logger.getLogger(ServidorHttp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void crearHtml(){
+        File f = new File( "Contactos.txt" );
+        File html = new File("contacto.html");
+        BufferedReader entrada;
+        try {
+            FileWriter escrito = new FileWriter(html);
+            BufferedWriter bw = new BufferedWriter(escrito);
+            PrintWriter wr = new PrintWriter(bw);  
+
+            entrada = new BufferedReader( new FileReader( f ) );
+            String linea;
+            while(entrada.ready()){
+                linea = entrada.readLine();
+                StringTokenizer nombre = new StringTokenizer(linea);
+                wr.append("<HTML>");
+                wr.append("<BODY><h1>" + nombre.nextToken() + "</h1></BODY></HTML>");
+            }
+            wr.close();
+            bw.close();
+            entrada.close();
+        }catch (IOException e) {
+            e.printStackTrace();
         }
     }
     
