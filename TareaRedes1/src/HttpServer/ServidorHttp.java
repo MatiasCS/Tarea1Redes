@@ -70,6 +70,9 @@ public class ServidorHttp implements Runnable{
         String metodo;
         BufferedOutputStream salidaArchivo;
         try {
+
+            
+            
             //Lectura mensaje enviado por el cliente
             crearHtml();
             entradacliente = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
