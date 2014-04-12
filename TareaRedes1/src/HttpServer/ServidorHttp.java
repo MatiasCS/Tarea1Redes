@@ -53,11 +53,6 @@ public class ServidorHttp implements Runnable{
         } catch (IOException ex) {
             Logger.getLogger(ServidorHttp.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-     
-        
-        
     }
 
     @Override
@@ -70,9 +65,7 @@ public class ServidorHttp implements Runnable{
         String metodo;
         BufferedOutputStream salidaArchivo;
         try {
-
-            
-            
+        
             //Lectura mensaje enviado por el cliente
             crearHtml();
             entradacliente = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
@@ -138,10 +131,7 @@ public class ServidorHttp implements Runnable{
                 //-----------------------------------------
                 //Parte de ingresar los datos a un archivo.txt
                 //-----------------------------------------
-                
-                
-               
-                
+                                
             }
             //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         } catch (IOException ex) {
