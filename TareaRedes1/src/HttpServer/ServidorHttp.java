@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,6 +65,7 @@ public class ServidorHttp implements Runnable{
         String archivoPedido;
         String metodo;
         BufferedOutputStream salidaArchivo;
+        PrintWriter output = null;
         try {
         
             //Lectura mensaje enviado por el cliente
@@ -73,7 +75,8 @@ public class ServidorHttp implements Runnable{
             StringTokenizer token = new StringTokenizer(entrada);
             metodo = token.nextToken();
             archivoPedido = token.nextToken();
-            salidaArchivo = new BufferedOutputStream(conexion.getOutputStream());          
+            salidaArchivo = new BufferedOutputStream(conexion.getOutputStream());
+            output = new PrintWriter(conexion.getOutputStream());
             
             formulario =entradacliente; //Se le da el valor a la variable de lo que envia el Usuario
 
@@ -91,12 +94,20 @@ public class ServidorHttp implements Runnable{
                 stream = new FileInputStream(archivo);
                 stream.read(buffer);
                 
+                output.println("HTTP/1.0 200 OK");
+                output.println("Server: Java HTTP Server 1.0");
+                output.println("Date: " + new Date());
+                output.println("Content-length: " + pesoArchivo);
+                output.println();
+                output.flush();
+                
                 salidaArchivo.write(buffer,0,pesoArchivo);
                 salidaArchivo.flush();
                 
                 entradacliente.close();
                 salidaArchivo.close();
                 conexion.close();
+                output.close();
             }
             //Implementacion POST
             else if(metodo.equals("POST")){
@@ -147,7 +158,7 @@ public class ServidorHttp implements Runnable{
                 //-----------------------------------------
                 //FIN ESCRIBIR FICHERO
                 //-----------------------------------------
-                                
+
             }
             //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         } catch (IOException ex) {
@@ -166,18 +177,32 @@ public class ServidorHttp implements Runnable{
 
             entrada = new BufferedReader( new FileReader( f ) );
             String linea;
+            if(html.exists())
+                html.delete();
+            wr.append("<HTML>");
+            wr.append("<BODY>");
             while(entrada.ready()){
                 linea = entrada.readLine();
                 StringTokenizer nombre = new StringTokenizer(linea);
-                wr.append("<HTML>");
-                wr.append("<BODY><h1>" + nombre.nextToken() + "</h1></BODY></HTML>");
+                
+                wr.append("<FONT FACE = 'calibri' >" + leerNombre(nombre.nextToken()) + "</FONT><BR>");
             }
+            wr.append("</BODY></HTML>");
             wr.close();
             bw.close();
             entrada.close();
         }catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public String leerNombre(String nombre){
+        StringTokenizer token = new StringTokenizer(nombre, "+");
+        String nombreCompleto = "";
+        while(token.hasMoreElements()){
+            nombreCompleto += token.nextToken() + " ";
+        }
+        return(nombreCompleto);
     }
     
 }
