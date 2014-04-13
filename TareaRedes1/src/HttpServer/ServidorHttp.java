@@ -177,8 +177,6 @@ public class ServidorHttp implements Runnable{
 
             entrada = new BufferedReader( new FileReader( f ) );
             String linea;
-            if(html.exists())
-                html.delete();
             wr.append("<HTML>");
             wr.append("<BODY>");
             while(entrada.ready()){
