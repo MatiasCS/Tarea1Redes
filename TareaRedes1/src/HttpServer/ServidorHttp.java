@@ -153,6 +153,23 @@ public class ServidorHttp implements Runnable{
                     escritor_final.append(datos2[1]+" "+datos2[3]+" "+datos2[5]+"\r\n");
                     escritor_final.close();
                     buffescritor.close();
+                
+                    FileInputStream stream;
+                    byte[] buffer = new byte[pesoArchivo];
+
+                    stream = new FileInputStream(archivo);
+                    stream.read(buffer);    
+
+                    output.println("HTTP/1.0 200 OK");
+                    output.println("Server: Java HTTP Server 1.0");
+                    output.println("Date: " + new Date());
+                    output.println("Content-length: " + pesoArchivo);
+                    output.println();
+                    output.flush();
+
+                    salidaArchivo.write(buffer,0,pesoArchivo);
+                    salidaArchivo.flush();
+
                 }
                 catch(IOException e){}
                 //-----------------------------------------
