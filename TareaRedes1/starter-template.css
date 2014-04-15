@@ -13,3 +13,8 @@ padding:5px;
 .boton{
 border:0;
 }
+
+.cuerpo{
+background-image: url(paperplane.png);
+background-size: 100% 100%;
+}

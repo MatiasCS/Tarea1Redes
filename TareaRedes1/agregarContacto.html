@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="boostrap.css" type="text/css" media="all">
 		<link rel="stylesheet" href="starter-template.css" type="text/css" media="all">		
     </head>
-    <body>
+    <body class = cuerpo>
 	    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -26,7 +26,8 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
-	
+	<div class="container">
+	<div class="starter-template">
         <form method="POST" action="http://localhost:8080">
 		<h1 align="center">Nuevo Contacto</h1>
 		<table align="center" style="width:300px">
@@ -44,9 +45,11 @@
 		</tr>
 		<tr>
 		<td><input type="reset" value="Borrar datos" class="boton"></td>
-		<td align="center"><input type="submit" title="enviar" class="boton"></td>
+		<td align="center"><input type="submit" title="enviar" class="boton" value="Agregar Contacto"></td>
 		</tr>
 		</table>
         </form>
+	</div>
+	</div>
     </body>
 </html>
