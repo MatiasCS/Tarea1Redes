@@ -94,10 +94,13 @@ public class ServidorHttp implements Runnable{
                 stream = new FileInputStream(archivo);
                 stream.read(buffer);
                 
+                String contenido = tipoDeContenido(archivoPedido);
+                
                 output.println("HTTP/1.0 200 OK");
                 output.println("Server: Java HTTP Server 1.0");
                 output.println("Date: " + new Date());
                 output.println("Content-length: " + pesoArchivo);
+                output.println("Content-type: " + contenido);
                 output.println();
                 output.flush();
                 
@@ -158,12 +161,13 @@ public class ServidorHttp implements Runnable{
                     byte[] buffer = new byte[pesoArchivo];
 
                     stream = new FileInputStream(archivo);
-                    stream.read(buffer);    
+                    stream.read(buffer);
 
                     output.println("HTTP/1.0 200 OK");
                     output.println("Server: Java HTTP Server 1.0");
                     output.println("Date: " + new Date());
                     output.println("Content-length: " + pesoArchivo);
+                    output.println("Content-type: " + contenido);
                     output.println();
                     output.flush();
 
@@ -219,5 +223,27 @@ public class ServidorHttp implements Runnable{
         }
         return(nombreCompleto);
     }
+    
+     private String tipoDeContenido(String archivo)
+  {
+    if (archivo.endsWith(".htm") ||
+      archivo.endsWith(".html"))
+    {
+      return "text/html";
+    }
+    else if (archivo.endsWith(".png"))
+    {
+      return "image/png";
+    }
+    else if (archivo.endsWith(".jpg") ||
+      archivo.endsWith(".jpeg"))
+    {
+      return "image/jpeg";
+    }
+    else
+    {
+      return "text/plain";
+    }
+  }
     
 }
